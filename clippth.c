@@ -19,7 +19,7 @@ VOID DrawClippedLines( HWND hwnd );
 
 #define CLPPTH_CLASSNAME "CLIPPATH"
 
-int cdecl main(VOID)
+int main(VOID)
 {
 
    HMQ  hmq;
@@ -30,13 +30,13 @@ int cdecl main(VOID)
                            FCF_TASKLIST   | FCF_TITLEBAR      | FCF_SYSMENU |
                            FCF_SIZEBORDER | FCF_MINMAX ;
 
-   hab = WinInitialize( (USHORT)NULL );
+   hab = WinInitialize( (ULONG)NULL );
 
    hmq=WinCreateMsgQueue( hab,0 );
 
 
    WinRegisterClass( hab
-                   , CLPPTH_CLASSNAME
+                   , (PCSZ) CLPPTH_CLASSNAME
                    , (PFNWP)ClientWndProc
                    , (ULONG)CS_SIZEREDRAW
                    , (USHORT)256 );
@@ -44,8 +44,8 @@ int cdecl main(VOID)
    hwndFrame = WinCreateStdWindow( HWND_DESKTOP
                                  ,  0UL
                                  ,  &flCreateFlags
-                                 ,  CLPPTH_CLASSNAME
-                                 ,  "Clip Path"
+                                 ,  (PCSZ) CLPPTH_CLASSNAME
+                                 ,  (PCSZ) "Clip Path"
                                  ,  WS_VISIBLE
                                  ,  (HMODULE)0
                                  ,  0
@@ -101,6 +101,7 @@ MRESULT EXPENTRY ClientWndProc(HWND hwnd, ULONG msg, MPARAM mp1, MPARAM mp2)
        return( WinDefWindowProc( hwnd, msg, mp1, mp2 )) ;
      }
    }
+   return 0;
 }
 
 VOID DrawClippedLines( HWND hwnd )
@@ -158,5 +159,3 @@ VOID DrawClippedLines( HWND hwnd )
 
   WinReleasePS( hps );
 }
-
-
